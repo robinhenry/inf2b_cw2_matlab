@@ -1,15 +1,10 @@
 function [CM, acc] = my_confusion(Ctrues, Cpreds)
-% Creates a confusion matrix.
-
-% Inputs:
-%   Ctrues: N-by-1 vector of ground truth (target) class labels.
-%   Cpreds: N-by-1 vector of predicted class labels.
-
-% Outputs:
-%   CM: K-by-K confusion matrix, where CM(i,j) is the number of samples whose target is 
-%       the i?th class that was classified as j.  
-%       K is the number of classes.
-%   acc: A scalar variable representing the accuracy in the range [0,1].
+% Input:
+%   Ctrues : N-by-1 ground truth label vector
+%   Cpreds : N-by-1 predicted label vector
+% Output:
+%   CM : K-by-K confusion matrix, where CM(i,j) is the number of samples whose target is the ith class that was classified as j
+%   acc : accuracy (i.e. correct classification rate)
 
 % Initialisation of confusion matrix
 K = 2;

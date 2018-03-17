@@ -6,7 +6,7 @@ clear variables; close all;
 
 % load the data set
 %load("/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat");
-load('../data/data.mat');
+load('../d/data.mat');
 
 % Feature vectors: Convert uint8 data to double, and divide by 255.
 Xtrn = double(dataset.train.images) ./ 255.0;
@@ -27,9 +27,8 @@ disp(elapsed_time);
 % Get confusion matrix and accuracy for each k in kb.
 for i = 1:size(kb,2)
    [CM, acc] =  my_confusion(Ctst, Cpreds(:,i));
-   eval(sprintf('cm%d = CM', kb(i)));
-   s = sprintf('cm%d', kb(i));
-   save(strcat(s, '.mat'), s);
+   eval(sprintf('cm%d = i', i));
+    
 end
 % Save each confusion matrix.
 
