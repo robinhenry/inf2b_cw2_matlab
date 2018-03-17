@@ -3,10 +3,9 @@
 % Clear all variables and close figures
 clear variables; close all;
 
-
 % load the data set
 %load("/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat");
-load('../d/data.mat');
+load('../data/data.mat');
 
 % Feature vectors: Convert uint8 data to double, and divide by 255.
 Xtrn = double(dataset.train.images) ./ 255.0;
@@ -16,24 +15,27 @@ Ctrn = dataset.train.labels;
 Ctst = dataset.test.labels;
 
 % Prepare measuring time
-tic;
+knn = tic;
 % Run K-NN classification
 kb = [1,3,5,10,20];
 Cpreds = my_knn_classify(Xtrn, Ctrn, Xtst, kb);
 
 % Measure the time taken, and display it.
-elapsed_time = toc;
+elapsed_time = toc(knn);
 disp(elapsed_time);
-% Get confusion matrix and accuracy for each k in kb.
+
+% For each k in kb:
 for i = 1:size(kb,2)
+   % Get confusion matrix and accuracy
    [CM, acc] =  my_confusion(Ctst, Cpreds(:,i));
-   eval(sprintf('cm%d = i', i));
-    
+   % Save each confusion matrix.
+   eval(sprintf('cm%d = CM', kb(i)));
+   s = sprintf('cm%d', kb(i));
+   save(strcat(s, '.mat'), s);
+   % Display the required information - k, N, Nerrs, acc.
+   N = size(Ctst,1);
+   Nerrs = N * (1-acc);
+   disp(kb(i)); disp(N); disp(Nerrs); disp(acc);
 end
-% Save each confusion matrix.
 
-% Display the required information - k, N, Nerrs, acc for
-%           each element of kb.
-
-
-
+time_end = toc(time_start);

@@ -23,16 +23,14 @@ DI = square_dist_vectorised(Xtrn, Xtst);
 
 % Iterate over each value of k from Ks
 for i = 1:L   
-    k = Ks(i);                                              % k value
-    
     % Select the indexes corresponding to k nearest neighbours
-    k_idx = idx(:, 1:k);                                    % k_idx = N-by-k matrix
+    k = Ks(i);
+    % Add 1 column in case k==1
+    k_idx = [idx(:, 1:k) ones(N,1)];                      % k_idx = N-by-(k+1) matrix
 
     % Choose the most frequent class out of the k neighbours
     classes = Ctrn(k_idx);
-    if k == 1                   % special case
-        classes = classes';
-    end
+    classes = classes(:,1:end-1);                   % remove last column
     Cpreds(:,i) =  mode(classes, 2);
 end
 

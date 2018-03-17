@@ -3,6 +3,8 @@
 % Clear all variables and close figures
 clear variables; close all;
 
+% Start timer
+time_start = tic;
 
 % load the data set
 %load("/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat");
@@ -16,25 +18,29 @@ Ctrn = dataset.train.labels;
 Ctst = dataset.test.labels;
 
 % Prepare measuring time
-tic;
+knn = tic;
 % Run K-NN classification
 kb = [1,3,5,10,20];
 Cpreds = my_knn_classify(Xtrn, Ctrn, Xtst, kb);
 
 % Measure the time taken, and display it.
-elapsed_time = toc;
+elapsed_time = toc(knn);
+fprintf("Time taken by my_knn_classify(): %d\n", elapsed_time);
 disp(elapsed_time);
-% Get confusion matrix and accuracy for each k in kb.
+
+% For each k in kb:
 for i = 1:size(kb,2)
+   % Get confusion matrix and accuracy
    [CM, acc] =  my_confusion(Ctst, Cpreds(:,i));
-   eval(sprintf('cm%d = CM', kb(i)));
+   % Save each confusion matrix.
+   eval(sprintf('cm%d = CM;', kb(i)));
    s = sprintf('cm%d', kb(i));
    save(strcat(s, '.mat'), s);
+   % Display the required information - k, N, Nerrs, acc.
+   N = size(Ctst,1);
+   Nerrs = N * (1-acc);
+   fprintf('k: %d, N: %d, Nerrs: %d, acc: %d\n', kb(i), N, Nerrs, acc);
 end
-% Save each confusion matrix.
 
-% Display the required information - k, N, Nerrs, acc for
-%           each element of kb.
-
-
-
+time_end = toc(time_start);
+fprintf("Time taken by script: %d\n", time_end);

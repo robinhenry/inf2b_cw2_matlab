@@ -7,7 +7,7 @@ function [CM, acc] = my_confusion(Ctrues, Cpreds)
 %   acc : accuracy (i.e. correct classification rate)
 
 % Initialisation of confusion matrix
-K = 2;
+K = 26;
 CM = zeros(K, K);
 
 % Iterate over each class 
