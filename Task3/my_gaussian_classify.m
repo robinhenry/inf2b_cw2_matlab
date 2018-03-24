@@ -11,7 +11,6 @@ function [Cpreds, Ms, Covs] = my_gaussian_classify(Xtrn, Ctrn, Xtst, epsilon)
 %  Covs   : D-by-D-by-K 3D array of covariance matrices
 
 % Size of matrices
-M = size(Xtrn,1);
 D = size(Xtrn,2);
 N = size(Xtst,1);
 K = 26;             % number of classes
@@ -27,8 +26,8 @@ for k = 1:K
     Covs(:,:,k) = myCov(samples, mu) + eye(D) * epsilon;
 end
 
-% Prior probability, where a uniform distribution is assumed
-prior = 1/26;
+% NB: No need to multiply the likelihoods by the prior probability, 
+%     since we assume a uniform prior distribution over class
 
 % Compute posterior probabilities for the test samples, in the log domain
 post_log = zeros(N, K);
@@ -36,10 +35,9 @@ for k = 1:K
     mu = Ms(:,k);
     sigma = Covs(:,:,k);
     diff = Xtst' - repmat(mu, 1, N);
-    post_matrix = - 0.5 * diff' * inv(sigma) * diff - 0.5 * logdet(sigma) + log(prior);
+    post_matrix = - 0.5 * diff' * inv(sigma) * diff - 0.5 * logdet(sigma);
     post_log(:,k) =  diag(post_matrix);
 end
 
 % Choose the class corresponding to the max posterior probability, for each test sample
-[max_prob, Cpreds] = max(post_log, [], 2);
-
+[~, Cpreds] = max(post_log, [], 2);
