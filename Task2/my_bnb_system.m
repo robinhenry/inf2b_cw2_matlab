@@ -35,9 +35,3 @@ save("cm.mat", "cm");
 N = size(Ctst,1);
 Nerrs = N * (1-acc);
 fprintf('N: %d, Nerrs: %d, acc: %d\n', N, Nerrs, acc);
-
-
-
-
-
-  

@@ -10,15 +10,13 @@ function [CM, acc] = my_confusion(Ctrues, Cpreds)
 K = 26;
 CM = zeros(K, K);
 
-% Iterate over each class 
-for i = 1:K
-    
-   % Vector of predictions corresponding to truth 'i'
-   preds = Cpreds(Ctrues == i);
-   
-   % Increment the ith row in CM 
+% Iterate over each class
+for k = 1:K
+   % Compute vector of predictions corresponding to truth of class k
+   preds = Cpreds(Ctrues == k);
+   % Increment the kth row (samples that should be of class k) in CM 
    for j = preds'
-       CM(i,j) = CM(i,j) + 1;
+       CM(k,j) = CM(k,j) + 1;
    end 
 end
 

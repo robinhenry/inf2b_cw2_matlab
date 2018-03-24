@@ -1,4 +1,5 @@
 function [Cpreds] = my_knn_classify(Xtrn, Ctrn, Xtst, Ks)
+% K-NN classification of test samples, based on training data.
 % Input:
 %   Xtrn : M-by-D training data matrix
 %   Ctrn : M-by-1 label vector for Xtrn
@@ -8,30 +9,28 @@ function [Cpreds] = my_knn_classify(Xtrn, Ctrn, Xtst, Ks)
 %  Cpreds : N-by-L matrix of predicted labels for Xtst
 
 % Matrix sizes
-M = size(Xtrn, 1);          % number of training samples
 N = size(Xtst, 1);          % number of test samples
 L = size(Ks, 2);            % number of different k-values to use
 
-% Initialise return matrix
-Cpreds = zeros(N, L);
-
 % Compute distances between each test sample and each training sample
-DI = square_dist_vectorised(Xtrn, Xtst);
+DI = MySqDist(Xtrn, Xtst);
 
 % Sort the distances between each test sample and all the training samples
-[dist_sorted, idx] = sort(DI, 2, 'ascend');          % idx = N-by-M matrix
+[~, idx] = sort(DI, 2, 'ascend');                   % idx = N-by-M matrix
+
+% Initialise prediction matrix (N-by-L)
+Cpreds = zeros(N, L);
 
 % Iterate over each value of k from Ks
 for i = 1:L   
     % Select the indexes corresponding to k nearest neighbours
     k = Ks(i);
     % Add 1 column in case k==1
-    k_idx = [idx(:, 1:k) ones(N,1)];                      % k_idx = N-by-(k+1) matrix
+    k_idx = [idx(:, 1:k) ones(N,1)];                % k_idx = N-by-(k+1) matrix
 
-    % Choose the most frequent class out of the k neighbours
+    % Choose the most frequent class out of the k neighbours, for each sample
     classes = Ctrn(k_idx);
     classes = classes(:,1:end-1);                   % remove last column
     Cpreds(:,i) =  mode(classes, 2);
 end
-
 end
