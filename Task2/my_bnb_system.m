@@ -4,8 +4,7 @@
 clear variables; close all;
 
 % load the data set
-%load("/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat");
-load("../data/data.mat");
+load('/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat');
 
 % Feature vectors: Convert uint8 data to double (but do not divide by 255)
 Xtrn = double(dataset.train.images);
@@ -19,19 +18,19 @@ bnb_start = tic;
 
 % Run classification
 threshold = 1;
-Cpreds = my_bnb_classify(Xtrn, Ctrn, Xtst, threshold);
+Cpreds = my_bnb_classify_log(Xtrn, Ctrn, Xtst, threshold);
 
 % Measure the time taken, and display it.
 bnb_end = toc(bnb_start);
-fprintf("Time taken by my_bnb_classify(): %d seconds\n", bnb_end);
+fprintf('\nTime taken by my_bnb_classify(): %.3f seconds.\n', bnb_end);
 
 % Get a confusion matrix and accuracy
 [cm, acc] =  my_confusion(Ctst, Cpreds);
 
-% Save the confusion matrix as "Task2/cm.mat".
-save("cm.mat", "cm");
+% Save the confusion matrix as 'Task2/cm.mat'.
+save('cm.mat', 'cm');
 
 % Display the required information - N, Nerrs, acc.
 N = size(Ctst,1);
 Nerrs = N * (1-acc);
-fprintf('N: %d, Nerrs: %d, acc: %d\n', N, Nerrs, acc);
+fprintf('Num. of test samples: %d, Num. of errors: %d, Accuracy: %d\n\n', N, Nerrs, acc);

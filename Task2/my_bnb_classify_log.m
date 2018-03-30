@@ -1,4 +1,4 @@
-function [Cpreds] = my_bnb_classify(Xtrn, Ctrn, Xtst, threshold)
+function [Cpreds] = my_bnb_classify_log(Xtrn, Ctrn, Xtst, threshold)
 % Classification using Naive Bayes with multivariate Bernoulli distributions
 % Input:
 %   Xtrn : M-by-D training data matrix
@@ -39,7 +39,7 @@ for k = 1:C
     
     % Compute the likelihoods
     factor_0 = repmat(trn_zeros(k,:),N,1) .^ (1-Xtst_bin);
-    factor_1 = repmat(trn_zeros(k,:),N,1) .^ Xtst_bin;
+    factor_1 = repmat(trn_ones(k,:),N,1) .^ Xtst_bin;
     
     likelihoods(:,k) = prod(factor_0 .* factor_1, 2);
 end
