@@ -1,4 +1,4 @@
-function [Cpreds] = my_bnb_classify(Xtrn, Ctrn, Xtst, threshold)
+function [Cpreds] = my_bnb_classify_log_smoothing(Xtrn, Ctrn, Xtst, threshold)
 % Classification using Naive Bayes with multivariate Bernoulli distributions
 % Input:
 %   Xtrn : M-by-D training data matrix
@@ -32,16 +32,16 @@ for k = 1:C
     nbr_samples_k = size(Xtrn_k, 1) - 1;      % '-1' because a row was added before
     % P(D_i = 0|C_k), where D_i is the ith element of a feature vector D
     %   + using Laplace's rule to avoid 0's
-    trn_zeros(k,:) = (sum(Xtrn_k == 0) -1) / (nbr_samples_k);
+    trn_zeros(k,:) = (sum(Xtrn_k == 0) -1 + 1) / (nbr_samples_k + C);
     % P(D_i = 1|C_k), where D_i is the ith element of a feature vector D
     %   + using Laplace's rule to avoid 0's
-    trn_ones(k,:) = (sum(Xtrn_k == 1)) / (nbr_samples_k);
+    trn_ones(k,:) = (sum(Xtrn_k == 1) + 1) / (nbr_samples_k + C);
     
     % Compute the likelihoods
     factor_0 = repmat(trn_zeros(k,:),N,1) .^ (1-Xtst_bin);
     factor_1 = repmat(trn_ones(k,:),N,1) .^ Xtst_bin;
     
-    likelihoods(:,k) = prod(factor_0 .* factor_1, 2);
+    likelihoods(:,k) = sum(log(factor_0 .* factor_1), 2);
 end
 
 % NB: No need to multiply the likelihoods by the prior probability, 

@@ -18,7 +18,7 @@ bnb_start = tic;
 
 % Run classification
 threshold = 1;
-Cpreds = my_bnb_classify_log(Xtrn, Ctrn, Xtst, threshold);
+Cpreds = my_bnb_classify(Xtrn, Ctrn, Xtst, threshold);
 
 % Measure the time taken, and display it.
 bnb_end = toc(bnb_start);
@@ -33,4 +33,4 @@ save('cm.mat', 'cm');
 % Display the required information - N, Nerrs, acc.
 N = size(Ctst,1);
 Nerrs = N * (1-acc);
-fprintf('Num. of test samples: %d, Num. of errors: %d, Accuracy: %d\n\n', N, Nerrs, acc);
+fprintf('Num. of test samples: %d, Num. of errors: %4.f, Accuracy: %.3f\n\n', N, Nerrs, acc);

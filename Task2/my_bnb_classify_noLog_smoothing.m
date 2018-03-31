@@ -1,4 +1,4 @@
-function [Cpreds] = my_bnb_classify_log(Xtrn, Ctrn, Xtst, threshold)
+function [Cpreds] = my_bnb_classify_noLog_smoothing(Xtrn, Ctrn, Xtst, threshold)
 % Classification using Naive Bayes with multivariate Bernoulli distributions
 % Input:
 %   Xtrn : M-by-D training data matrix
