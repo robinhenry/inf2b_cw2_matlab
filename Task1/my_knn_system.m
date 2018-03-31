@@ -35,6 +35,6 @@ for i = 1:size(kb,2)
    % Display the required information - k, N, Nerrs, acc
    N = size(Ctst,1);
    Nerrs = N * (1-acc);
-   fprintf('k: %d,\t Num. of test samples: %i,\t Num. of errors: %4.f,\t Accuracy: %.3f.\n', kb(i), N, Nerrs, acc);
+   fprintf('k: %d,\t Num. of test samples: %d,\t Num. of errors: %4.f,\t Accuracy: %.3f.\n', kb(i), N, Nerrs, acc);
 end
 fprintf('\n');

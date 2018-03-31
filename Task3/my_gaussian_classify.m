@@ -26,8 +26,8 @@ for k = 1:K
     Covs(:,:,k) = myCov(samples, mu) + eye(D) * epsilon;
 end
 
-% NB: No need to multiply the likelihoods by the prior probability, 
-%     since we assume a uniform prior distribution over class
+% NB: No need to include the prior probability to compute the posterior
+%     probability, since we assume a uniform prior distribution over class
 
 % Compute posterior probabilities for the test samples, in the log domain
 post_log = zeros(N, K);
