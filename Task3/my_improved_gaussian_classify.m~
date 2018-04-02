@@ -23,13 +23,14 @@ for k=1:K
     selection = Ctrn == k;                  % boolean vector to select samples from class k
     samples = Xtrn(selection, :);           % training samples from class k
     idx = myKmeans(samples, K_clust)';      % 1800-by-1 vector of indexes corresponding to clusters
-    new_Ctrn(selection) = idx + K_clust * (k-1);  
+    new_Ctrn(selection) = idx + 3 * (k-1);  
 end
 
 % Remove empty clusters
 for k = Ks
     if(sum(new_Ctrn == k) == 0)
-        Ks(Ks==k) = [];
+        
+        Ks(k) = [];
     end
 end
 num_clusters = size(Ks,2);
@@ -62,6 +63,6 @@ end
 [~, Cpreds] = max(post_log, [], 2);
 
 % Go back to 26 classes
-Cpreds = ceil(Cpreds/K_clust);
+Cpreds = ceil(Cpreds,K_clust);
 
 end

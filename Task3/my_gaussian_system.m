@@ -4,7 +4,8 @@
 clear variables; close all;
 
 % load the data set
-load('/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat');
+%load('/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat');
+load('../data/data.mat');
 
 % Feature vectors: Convert uint8 data to double, and divide by 255.
 Xtrn = double(dataset.train.images) ./ 255.0;
