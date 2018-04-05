@@ -1,8 +1,10 @@
 % my_improved_gaussian_system.m
-%
+
+% Clear all variables and close figures
+clear variables; close all;
+
 % load the data set
 load('/afs/inf.ed.ac.uk/group/teaching/inf2b/cwk2/d/s1605269/data.mat');
-%load('../data/data.mat');
 
 % Feature vectors: Convert uint8 data to double, and divide by 255.
 Xtrn = double(dataset.train.images) ./ 255.0;
@@ -11,14 +13,13 @@ Xtst = double(dataset.test.images) ./ 255.0;
 Ctrn = dataset.train.labels;
 Ctst = dataset.test.labels;
 
-%YourCode - Prepare to measure time
+% Prepare to measure time
 gaussian_start = tic;
 
 % Run classification
 epsilon = 0.01;
-for k=1:10
+for k=[6,7]
     [Cpreds] = my_improved_gaussian_classify(Xtrn, Ctrn, Xtst, epsilon,k);
-
 
     % Measure the time taken, and display it.
     gaussian_end = toc(gaussian_start);

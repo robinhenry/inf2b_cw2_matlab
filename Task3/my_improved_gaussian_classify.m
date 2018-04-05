@@ -3,7 +3,7 @@ function [Cpreds] = my_improved_gaussian_classify(Xtrn, Ctrn, Xtst, epsilon, K_c
 %   Xtrn    : M-by-D training data matrix
 %   Ctrn    : M-by-1 label vector for Xtrn
 %   Xtst    : N-by-D test data matrix
-%   K-clust : number of clusters to make for each class
+%   K-clust : number of clusters to create from each class
 %  NB: you may add arguments if necessary
 % Output:
 %  Cpreds : N-by-1 matrix of predicted labels for Xtst
@@ -14,15 +14,15 @@ M = size(Xtrn,1);
 N = size(Xtst,1);
 K = 26;             % number of classes
 
-% New classification of Xtrn with more classes, using Kmeans algorithm
+% New classification of Xtrn with more classes (clusters), using Kmeans algorithm
 Ks = 1:(26 * K_clust);
 new_Ctrn = zeros(M,1);
 
-% K-means
+% K-means (for each class)
 for k=1:K
-    selection = Ctrn == k;                  % boolean vector to select samples from class k
-    samples = Xtrn(selection, :);           % training samples from class k
-    idx = myKmeans(samples, K_clust)';      % 1800-by-1 vector of indexes corresponding to clusters
+    selection = Ctrn == k;                  % boolean vector to select S samples from class k
+    samples = Xtrn(Ctrn == k, :);           % training samples S from class k
+    idx = myKmeans(samples, K_clust)';      % S-by-1 vector of indexes corresponding to clusters
     new_Ctrn(selection) = idx + K_clust * (k-1);  
 end
 
@@ -32,6 +32,8 @@ for k = Ks
         Ks(Ks==k) = [];
     end
 end
+
+% Number of clusters after removing empty ones
 num_clusters = size(Ks,2);
 
 % Compute matrix of sample mean vectors 
@@ -61,7 +63,7 @@ end
 % Choose the class corresponding to the max posterior probability, for each test sample
 [~, Cpreds] = max(post_log, [], 2);
 
-% Go back to 26 classes
+% Go back to K classes, from num_clusters clusters
 Cpreds = ceil(Cpreds/K_clust);
 
 end
