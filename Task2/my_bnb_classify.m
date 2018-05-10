@@ -17,7 +17,6 @@ C = 26;                     % number of classes
 Xtrn_bin = Xtrn >= threshold;
 Xtst_bin = Xtst >= threshold;
 
-
 % Matrices to store characteristics of each class
 trn_zeros = zeros(C, D);                % C-by-D matrix, numbers of 0's for each pixel
 trn_ones = zeros(C, D);                 % C-by_D matrix, numbers of 1's for each pixel
