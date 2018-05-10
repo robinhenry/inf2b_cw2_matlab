@@ -1,2 +1,0 @@
-- change address of data to load
-- record runtimes on DICE machine
