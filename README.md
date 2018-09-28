@@ -1,4 +1,4 @@
-# inf2b_cw2_matlab
+# inf2b_matlab
 
 This repository contains code written for an Introductory Machine Learning course. 
 
