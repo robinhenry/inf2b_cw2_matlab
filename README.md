@@ -1,7 +1,6 @@
 # inf2b_cw2_matlab
 
-This repository contains my code written for the second coursework (i.e. corresponding to the Learning thread) of the *Inf2B: 
-Algorithms, Data Structures and Learning* course taught at *The University of Edinburgh*, UK.
+This repository contains code written for an Introductory Machine Learning course. 
 
 ## Assignment
 The goal of this assignment was to classify, as accurately as possible, handwritten characters taken from the EMNIST dataset 
